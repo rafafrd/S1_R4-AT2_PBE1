@@ -14,6 +14,9 @@ app.use(express.json());
 app.post("/mensagem", (req, res) => {
   try {
     const { nome, idade, time } = req.body.mensagem;
+    if (!nome || !idade || !time) {
+      return res.status(400).json({ message: "Por favor, envie nome, idade e time favorito." });
+    }
     console.log(`Olá, ${nome}! Você tem ${idade} anos e torce para o ${time}!` );
     res.status(201).json({ message: `Olá, ${nome}! Você tem ${idade} anos e torce para o ${time}!` });
   }
