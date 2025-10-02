@@ -13,7 +13,9 @@ app.use(express.json());
 
 app.post("/mensagem", (req, res) => {
   try {
-    
+    const { nome, idade, time } = req.body.mensagem;
+    console.log(`Olá, ${nome}! Você tem ${idade} anos e torce para o ${time}!` );
+    res.status(201).json({ message: `Olá, ${nome}! Você tem ${idade} anos e torce para o ${time}!` });
   }
   catch (error) {
     console.log(error);
