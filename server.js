@@ -2,18 +2,26 @@ const express = require("express");
 const app = express();
 const PORT = 8081;
 
-// Crie uma projeto com que tenha uma rota POST /mensagem que atenda as seguintes necessidades:
-// Receba através do corpo da requisição (body) 3 dados: nome, idade e time favorito;
-// Retorne uma frase formada com os 3 dados recebidos: "Olá, Carlos! Você tem 18 anos e torce para o Real Madrid!";
+// Criar um projeto com uma rota POST /soma que receba 3 números no body e retorne o resultado da 
+// soma dos números recebidos. Verifique antes da soma se os os campos recebidos possuem valores numéricos;
+// Se necessário, informe ao cliente os problemas encontrados;
 
 
 // middleware para utilização de JSON
 app.use(express.json());
 // ==============================
 
-app.post("/mensagem", (req, res) => {
+app.post("/soma", (req, res) => {
   try {
-    
+    const { num1, num2, num3 } = req.body;
+    if (isNaN(num1) || isNaN(num2) || isNaN(num3)) {
+      res.status(400).json({ message: "Por favor, envie apenas valores numéricos." });
+    }
+    else {
+      const soma = parseFloat(num1) + parseFloat(num2) + parseFloat(num3);
+      console.log(`A soma dos números é ${soma}`)
+      res.status(201).json({ message: `A soma dos números é ${soma}` });
+    }
   }
   catch (error) {
     console.log(error);
