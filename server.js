@@ -2,25 +2,25 @@ const express = require("express");
 const app = express();
 const PORT = 8081;
 
-// Criar um projeto com uma rota POST /soma que receba 3 números no body e retorne o resultado da 
-// soma dos números recebidos. Verifique antes da soma se os os campos recebidos possuem valores numéricos;
-// Se necessário, informe ao cliente os problemas encontrados;
+// Criar um projeto com uma rota POST /login que receba um usuário e senha no body e verifique:
+// O usuário e senha infomados estão corretos.
+// Se os valores forem diferentes do esperado, retorne um erro no formato json informado o usuário.
+// Para o teste utilize os valores, usuario: admin e senha:1234
 
 
 // middleware para utilização de JSON
 app.use(express.json());
 // ==============================
 
-app.post("/soma", (req, res) => {
+app.post("/login", (req, res) => {
   try {
-    const { num1, num2, num3 } = req.body;
-    if (isNaN(num1) || isNaN(num2) || isNaN(num3)) {
-      res.status(400).json({ message: "Por favor, envie apenas valores numéricos." });
-    }
-    else {
-      const soma = parseFloat(num1) + parseFloat(num2) + parseFloat(num3);
-      console.log(`A soma dos números é ${soma}`)
-      res.status(201).json({ message: `A soma dos números é ${soma}` });
+    const { usuario, senha } = req.body;
+    if (usuario === "admin" && senha === "1234") {
+      console.log(`Login bem sucedido`)
+      res.status(200).json({ message: "Login bem sucedido" });
+    } else {
+      console.log(`Usuário ou senha incorretos   usuario: ${usuario}`)
+      res.status(401).json({ message: "Usuário ou senha incorretos", usuario: usuario });
     }
   }
   catch (error) {
